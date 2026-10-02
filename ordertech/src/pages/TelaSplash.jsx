@@ -8,7 +8,7 @@ export default function TelaSplash({ executarComAtraso }) {
         <div
             className={styles['tela-splash']}
             onClick={() => executarComAtraso(() => navegar('/local'))}>
-            <div className={styles['banner-placeholder']}> <img src="../../public/img/banner.jpeg"/> </div>
+            <img src="/img/banner.jpeg" className={styles["banner-img"]} alt="Banner Promocional" />
             <h1 className={styles['texto-iniciar']}>Toque na tela para iniciar</h1>
         </div>
     );

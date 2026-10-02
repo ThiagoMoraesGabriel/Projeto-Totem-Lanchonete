@@ -1,0 +1,189 @@
+/* Container Principal */
+.tela-review {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+.titulo-tela {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #334155;
+  margin-bottom: 24px;
+}
+
+/* Container do Produto */
+.quantity-container {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.product-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  text-align: center;
+  margin: 0 0 20px 0;
+}
+
+/* Área da Imagem */
+.produto-img-container {
+  width: 100%;
+  max-width: 280px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8fafc;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  margin: 10px 0 30px 0;
+  overflow: hidden;
+}
+
+.produto-imagem {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Ajusta a imagem sem distorcer */
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.produto-placeholder {
+  color: #94a3b8;
+  font-size: 1.25rem;
+  font-weight: 500;
+  text-align: center;
+  padding: 16px;
+}
+
+/* Controles de Quantidade */
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.btn-qty {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid #cbd5e1;
+  background-color: #ffffff;
+  color: #0f172a;
+  font-size: 1.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.btn-qty:hover {
+  background-color: #006039;
+  color: #ffffff;
+  border-color: #006039;
+}
+
+.btn-qty:active {
+  transform: scale(0.92);
+}
+
+.qty-display {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #0f172a;
+  min-width: 48px;
+  text-align: center;
+}
+
+/* Preço Total */
+.total-price {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #006039;
+  margin: 20px 0 30px 0;
+  text-align: center;
+}
+
+/* Ações (Botões) */
+.quantity-actions {
+  display: flex;
+  flex-direction: column; /* Empilha os botões para telas menores */
+  gap: 12px;
+  width: 100%;
+}
+
+.btn-adicionar {
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background-color: #006039;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  width: 100%;
+}
+
+.btn-adicionar:hover {
+  background-color: #004d2e;
+}
+
+.btn-remover {
+  padding: 14px;
+  border: 1px solid #ef4444; /* Vermelho para indicar remoção */
+  border-radius: 12px;
+  background-color: #fef2f2;
+  color: #dc2626;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.btn-remover:hover {
+  background-color: #fee2e2;
+}
+
+.btn-voltar {
+  padding: 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background-color: #f8fafc;
+  color: #475569;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+.btn-voltar:hover {
+  background-color: #e2e8f0;
+}
+
+/* Efeito de clique em todos os botões */
+.btn-adicionar:active,
+.btn-remover:active,
+.btn-voltar:active {
+  transform: scale(0.98);
+}

@@ -1,0 +1,65 @@
+.produto-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  text-align: center;
+  width: 100%;
+  max-width: 240px;
+  box-sizing: border-box;
+}
+
+.produto-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Container fixo para manter o padrão das imagens */
+.produto-img-container {
+  
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  background-color: #f8fafc;
+  margin-bottom: 12px;
+}
+
+/* Estilo da Imagem */
+.produto-imagem {
+  width: 100%;
+  height: 90%;
+  object-fit: cover; /* Garante que a imagem preencha o espaço sem distorcer */
+  object-position: center;
+  display: block;
+}
+
+/* Texto alternativo quando não há imagem */
+.produto-placeholder {
+  color: #64748b;
+  font-weight: 500;
+  padding: 8px;
+  word-break: break-word;
+}
+
+.produto-titulo {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+  line-height: 1.3;
+}
+
+.produto-preco {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #16a34a;
+  margin: 0;
+}

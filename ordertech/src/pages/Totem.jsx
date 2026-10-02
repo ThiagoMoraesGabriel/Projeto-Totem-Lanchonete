@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import styles from './Totem.module.css';
 import TelaSplash from './TelaSplash';
@@ -12,129 +12,109 @@ import TelaSucesso from './TelaSucesso';
 import { categoriasDados, produtosDados } from '../data/menuDados';
 
 export default function Totem() {
-    const navegar = useNavigate();
+  const navegar = useNavigate();
 
-    const [local, setLocal] = useState('');
-    const [categorias, setCategorias] = useState([]);
-    const [produtos, setProdutos] = useState([]);
-    const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
+  const [local, setLocal] = useState('');
+  const [categorias, setCategorias] = useState([]);
+  const [produtos, setProdutos] = useState([]);
+  const [categoriaSelecionada, setCategoriaSelecionada] = useState(null);
 
-    const [carrinho, setCarrinho] = useState([]);
-    const [itemParaModificar, setItemParaModificar] = useState(null);
-    const [indiceModificacao, setIndiceModificacao] = useState(-1);
-    const [metodoPagamento, setMetodoPagamento] = useState('');
-    const [numeroPedido, setNumeroPedido] = useState(null);
+  const [carrinho, setCarrinho] = useState([]);
+  const [itemParaModificar, setItemParaModificar] = useState(null);
+  const [indiceModificacao, setIndiceModificacao] = useState(-1);
+  const [metodoPagamento, setMetodoPagamento] = useState('');
+  const [numeroPedido, setNumeroPedido] = useState(null);
 
-    const executarComAtraso = (acao) => {
+  const executarComAtraso = (acao) => {
+    setTimeout(() => {
+      acao();
+    }, 150);
+  };
+
+  useEffect(() => {
+    setCategorias(categoriasDados);
+    if (categoriasDados.length > 0) setCategoriaSelecionada(categoriasDados[0].id);
+  }, []);
+
+  useEffect(() => {
+    if (categoriaSelecionada) {
+      setProdutos(produtosDados.filter(p => p.categoryId === categoriaSelecionada));
+    }
+  }, [categoriaSelecionada]);
+
+  const processarPagamento = (metodo) => {
+    executarComAtraso(() => {
+      setMetodoPagamento(metodo);
+      navegar('/processando');
+
+      // Simula o tempo de pagamento na maquininha (5 segundos)
+      setTimeout(() => {
+        const fakeOrderNumber = Math.floor(1000 + Math.random() * 9000);
+        setNumeroPedido(fakeOrderNumber);
+        navegar('/sucesso');
+
+        // Volta para a tela inicial após 5 segundos na tela de sucesso
         setTimeout(() => {
-            acao();
-        }, 150);
-    };
+          navegar('/');
+          setCarrinho([]);
+          setLocal('');
+          setMetodoPagamento('');
+        }, 5000);
+      }, 5000);
+    });
+  };
 
-    useEffect(() => {
-        setCategorias(categoriasDados);
-        if (categoriasDados.length > 0) setCategoriaSelecionada(categoriasDados[0].id);
-    }, []);
+  return (
+    <div className={styles["totem-wrapper"]}>
+      <Routes>
+        <Route path="/" element={<TelaSplash executarComAtraso={executarComAtraso} />} />
 
-    useEffect(() => {
-        if (categoriaSelecionada) {
-            setProdutos(produtosDados.filter((p) => p.categoryId === categoriaSelecionada));
-        }
-    }, [categoriaSelecionada]);
+        <Route path="/local" element={<TelaLocal executarComAtraso={executarComAtraso} setLocal={setLocal} />} />
 
-    const processarPagamento = (metodo) => {
-        executarComAtraso(() => {
-            setMetodoPagamento(metodo);
-            navegar('/processando');
+        <Route path="/menu" element={
+          <TelaMenu
+            categorias={categorias}
+            produtos={produtos}
+            categoriaSelecionada={categoriaSelecionada}
+            setCategoriaSelecionada={setCategoriaSelecionada}
+            carrinho={carrinho}
+            setCarrinho={setCarrinho}
+            executarComAtraso={executarComAtraso}
+          />
+        } />
 
-            // Simula o tempo de pagamento na maquininha (5 segundos)
-            setTimeout(() => {
-                const fakeOrderNumber = Math.floor(1000 + Math.random() * 9000);
-                setNumeroPedido(fakeOrderNumber);
-                navegar('/sucesso');
+        <Route path="/resumo" element={
+          <TelaResumo
+            carrinho={carrinho}
+            setCarrinho={setCarrinho}
+            executarComAtraso={executarComAtraso}
+            setItemParaModificar={setItemParaModificar}
+            setIndiceModificacao={setIndiceModificacao}
+          />
+        } />
 
-                // Volta para a tela inicial após 5 segundos na tela de sucesso
-                setTimeout(() => {
-                    navegar('/');
-                    setCarrinho([]);
-                    setLocal('');
-                    setMetodoPagamento('');
-                }, 5000);
-            }, 5000);
-        });
-    };
+        <Route path="/modificar" element={
+          <TelaModificarItem
+            itemParaModificar={itemParaModificar}
+            setItemParaModificar={setItemParaModificar}
+            indiceModificacao={indiceModificacao}
+            carrinho={carrinho}
+            setCarrinho={setCarrinho}
+            executarComAtraso={executarComAtraso}
+          />
+        } />
 
-    return (
-        <div className={styles['totem-wrapper']}>
-            <Routes>
-                <Route path="/" element={<TelaSplash executarComAtraso={executarComAtraso} />} />
+        <Route path="/pagamento" element={
+          <TelaPagamento
+            executarComAtraso={executarComAtraso}
+            processarPagamento={processarPagamento}
+          />
+        } />
 
-                <Route
-                    path="/local"
-                    element={
-                        <TelaLocal executarComAtraso={executarComAtraso} setLocal={setLocal} />
-                    }
-                />
+        <Route path="/processando" element={<TelaProcessando metodoPagamento={metodoPagamento} />} />
 
-                <Route
-                    path="/menu"
-                    element={
-                        <TelaMenu
-                            categorias={categorias}
-                            produtos={produtos}
-                            categoriaSelecionada={categoriaSelecionada}
-                            setCategoriaSelecionada={setCategoriaSelecionada}
-                            carrinho={carrinho}
-                            setCarrinho={setCarrinho}
-                            executarComAtraso={executarComAtraso}
-                        />
-                    }
-                />
-
-                <Route
-                    path="/resumo"
-                    element={
-                        <TelaResumo
-                            carrinho={carrinho}
-                            setCarrinho={setCarrinho}
-                            executarComAtraso={executarComAtraso}
-                            setItemParaModificar={setItemParaModificar}
-                            setIndiceModificacao={setIndiceModificacao}
-                        />
-                    }
-                />
-
-                <Route
-                    path="/modificar"
-                    element={
-                        <TelaModificarItem
-                            itemParaModificar={itemParaModificar}
-                            setItemParaModificar={setItemParaModificar}
-                            indiceModificacao={indiceModificacao}
-                            carrinho={carrinho}
-                            setCarrinho={setCarrinho}
-                            executarComAtraso={executarComAtraso}
-                        />
-                    }
-                />
-
-                <Route
-                    path="/pagamento"
-                    element={
-                        <TelaPagamento
-                            executarComAtraso={executarComAtraso}
-                            processarPagamento={processarPagamento}
-                        />
-                    }
-                />
-
-                <Route
-                    path="/processando"
-                    element={<TelaProcessando metodoPagamento={metodoPagamento} />}
-                />
-
-                <Route path="/sucesso" element={<TelaSucesso numeroPedido={numeroPedido} />} />
-            </Routes>
-        </div>
-    );
+        <Route path="/sucesso" element={<TelaSucesso numeroPedido={numeroPedido} />} />
+      </Routes>
+    </div>
+  );
 }
